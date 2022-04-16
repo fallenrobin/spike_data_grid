@@ -18,7 +18,7 @@ import { Checkbox } from '@mui/material';
 
 const rows: GridRowsProp = [
   {
-    id: 1, date: 'Hello',
+    id: 1, date: '1/25/2022',
     orgName: 'World Street Kitchen',
     amount: '$25',
     sent: false
@@ -49,13 +49,16 @@ const columns: GridColDef[] = [
   },
   {
     field: 'sent',
-    renderEditCell: (params: GridRenderEditCellParams) => (
-      return <Checkbox {...params} />;),
+    // renderEditCell: (<Checkbox checked={checked} onChange={handleChange}/>),
+    //for checkbox
     headerName: 'Sent?',
     width: 150,
     editable: true
   },
 ];
+
+
+
 
 // const columns = GridColDef[] = [
 //   { date: "Date", field: "date" },
@@ -66,7 +69,9 @@ const columns: GridColDef[] = [
 
 function App() {
 
+  // const [checked, setChecked] = React.useState(true); //for checkbox
   const [state, setState] = useState(rows);
+
 const handleCommit = (e:GridCellEditCommitParams) => {
   const array = state.map(r=>{
     if(r.id === e.id) { //compares the record id to the edit id
