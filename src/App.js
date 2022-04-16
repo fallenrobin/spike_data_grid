@@ -1,30 +1,34 @@
 import './App.css';
 import React, { useState } from 'react';
 import { DataGrid, GridRowsProp, GridColDef } from '@mui/x-data-grid';
-import { Checkbox } from '@mui/material';
+import { Checkbox, Button } from '@mui/material';
 
-// import { ThemeProvider, createTheme } from '@mui/material';
 
-// Basic set up, using JSON Placeholder: https://www.youtube.com/watch?v=S_mgSHCWCmA
+// Basic set up of Material Table, using JSON Placeholder: https://www.youtube.com/watch?v=S_mgSHCWCmA
 
-// CRUD operations in data grid: https://www.youtube.com/watch?v=S7-99HqpWvo
-// const donations : GridRowsProp [
-//   {"date": "1/1/2022"},
-//     {"org name": "World Street Kitchen"},
-//     {"amount": "$25"},
-//     {"sent": false}
-//   }
-// ];
+// CRUD operations in Material Table: https://www.youtube.com/watch?v=S7-99HqpWvo
 
-const rows: GridRowsProp = [
+
+
+const rowData: GridRowsProp = [
   {
     id: 1, date: '1/25/2022',
     orgName: 'World Street Kitchen',
     amount: '$25',
     sent: false
   },
-  { id: 2, date: 'DataGridPro', col2: 'is Awesome' },
-  { id: 3, date: 'MUI', col2: 'is Amazing' },
+  {
+    id: 2, date: '1/25/2022',
+    orgName: 'Habitat',
+    amount: '$25',
+    sent: false
+  },
+  {
+    id: 3, date: '1/25/2022',
+    orgName: 'BLM',
+    amount: '$25',
+    sent: false
+  },
 ];
 
 const columns: GridColDef[] = [
@@ -67,21 +71,39 @@ const columns: GridColDef[] = [
 //   { date: "Sent?", field: "sent" }
 // ];
 
+//make cells editable and save to state: https://www.youtube.com/watch?v=niafDCOT_uA
+
 function App() {
 
   // const [checked, setChecked] = React.useState(true); //for checkbox
-  const [state, setState] = useState(rows);
+  const [state, setState] = useState(rowData);
 
-const handleCommit = (e:GridCellEditCommitParams) => {
-  const array = state.map(r=>{
-    if(r.id === e.id) { //compares the record id to the edit id
-      return{...r,[e.field]:e.value} //if matching, replaces the old value
-    } else {
-      return {...r} //returns the array without changes
-    }
-  });
-  setState(array); //sets state to changed / unchanged values
-}
+  const [rows, setRows] = useState(rowData);
+  const [deletedRows, setDeletedRows] = useState([]);
+
+  const handleRowSelection = (e) => {
+    console.log('in handleRowSelection:');
+    
+    setDeletedRows([...deletedRows, ...rows.filter((r) => r.id === e.rowData.id)]);
+  };
+
+  const handlePurge = () => {
+    console.log('in handlePurge:', rows);
+    setRows(
+      rows.filter((r) => deletedRows.filter((sr) => sr.id === r.id).length < 1)
+    );
+  };
+
+  const handleCommit = (e: GridCellEditCommitParams) => {
+    const array = state.map(r => {
+      if (r.id === e.id) { //compares the record id to the edit id
+        return { ...r, [e.field]: e.value } //if matching, replaces the old value
+      } else {
+        return { ...r } //returns the array without changes
+      }
+    });
+    setState(array); //sets state to changed / unchanged values
+  }
 
   // console.log(donations);
 
@@ -91,9 +113,13 @@ const handleCommit = (e:GridCellEditCommitParams) => {
       <div>{JSON.stringify(state)}</div>
       <div style={{ height: 300, width: '100%' }}>
         <DataGrid onCellEditCommit={handleCommit}
-        checkboxSelection = 'true'
-        rows={rows} columns={columns} />
+          checkboxSelection
+          onRowSelected={handleRowSelection}
+          rows={rowData} columns={columns} />
       </div>
+      <Button variant="contained" color="primary" onClick={handlePurge}>
+        Purge
+      </Button>
     </div>
   );
 }
