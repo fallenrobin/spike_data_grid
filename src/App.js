@@ -91,6 +91,7 @@ const handleCommit = (e:GridCellEditCommitParams) => {
       <div>{JSON.stringify(state)}</div>
       <div style={{ height: 300, width: '100%' }}>
         <DataGrid onCellEditCommit={handleCommit}
+        checkboxSelection = 'true'
         rows={rows} columns={columns} />
       </div>
     </div>
