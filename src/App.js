@@ -147,9 +147,25 @@ function App() {
             //for grabbing/setting state of ids of checked rows
             setArrIds(ids);
           }}
-          //could add pagination adjustment for fewer rows,
-          //which then calls for useEffect/useState (see video link)
+        //could add pagination adjustment for fewer rows,
+        //which then calls for useEffect/useState (see video link)
         />
+        <div style={{ fontSize: 30 }}>
+          <ul>Successes 🥳 and Discoveries 🕵️‍♀️</ul>
+
+          <li>Made cells editable, with vals stored in state</li>
+          <li>Grabbing row ids with checkboxes</li>
+          <li>Cool that the 'date' is working calendar</li>
+          <li>Downside but ok: 'space' or 'backspace' wipes cell (can't cmd-Z)</li>
+
+          <ul>Next steps🚶‍♀️</ul>
+
+          <li>Need to dispatch to sagas and in turn redux</li>
+          <li>Maybe figure out icons for deleting one row?</li>
+          <li>Make sure dynamic data displays correctly</li>
+          <li>Maybe figure out boolean checkbox for "Sent?" input</li>
+          <li>Ensure 'date' in data grid vibes with DB value (or do a conversion?)</li>
+        </div>
       </div>
       {/* <Button variant="contained" color="primary" onClick={handlePurge}>
         Purge
