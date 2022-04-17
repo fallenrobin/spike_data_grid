@@ -125,24 +125,30 @@ function App() {
 
 
   return (
-    <div style={{alignItems:'center'}} className="App">
+    <div style={{ alignItems: 'center' }} className="App">
       <h1>Data Grid SPIKE!📌</h1>
-      <div style={{fontSize: 20}}>{JSON.stringify(state)}</div>
+      <div style={{ fontSize: 20 }}>{JSON.stringify(state)}</div>
+      {/* stringify shows value updates of edited cells on DOM */}
 
       <button onClick={handleDeleteAll}
-        style={{ height: '30px', backgroundColor: 'red', color: 'white' }}>
+        style={{ height: '30px', backgroundColor: 'red', color: 'white', fontSize: '20px' }}>
         Delete selected rows
       </button>
 
-      <div style={{ display: '-ms-grid', height: 300, width: '50%'}}>
-        <DataGrid onCellEditCommit={handleCommit}
-          checkboxSelection
-          rows={rowData} columns={columns}
-          getRowId={(rowData) => rowData.id}
-          onSelectionModelChange={(ids) => {//for grabbing ids of checked rows
+      <div style={{ height: 300, width: '50%' }}>
+
+        <DataGrid
+          style={{ fontSize: 20 }}
+          onCellEditCommit={handleCommit}// saves changes upon 'enter' or 'tab'
+          checkboxSelection // makes checkboxes on left column
+          rows={rowData} columns={columns} // uses data above function; eventually needs Redux stores
+          // getRowId={(rowData) => rowData.id} Also id grabber, now obsolete... from past attempt?
+          onSelectionModelChange={(ids) => {
+            //for grabbing/setting state of ids of checked rows
             setArrIds(ids);
           }}
-          style={{fontSize: 20}}
+          //could add pagination adjustment for fewer rows,
+          //which then calls for useEffect/useState (see video link)
         />
       </div>
       {/* <Button variant="contained" color="primary" onClick={handlePurge}>
@@ -155,9 +161,3 @@ function App() {
 
 export default App;
 
-
-{/* <MaterialTable
-        title="Donations"
-        data={setData}
-        columns={columns}
-      /> */}
