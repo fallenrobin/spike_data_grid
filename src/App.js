@@ -63,21 +63,19 @@ const columns: GridColDef[] = [
 
 
 
+/* Make cells editable and save to state: 
+https://www.youtube.com/watch?v=niafDCOT_uA
 
-// const columns = GridColDef[] = [
-//   { date: "Date", field: "date" },
-//   { date: "Organization", field: "org name" },
-//   { date: "Dollar Amount", field: "amount" },
-//   { date: "Sent?", field: "sent" }
-// ];
-
-//make cells editable and save to state: https://www.youtube.com/watch?v=niafDCOT_uA
-
+Data grid - fetching data from API, loading, error messages:
+https://www.youtube.com/watch?v=5sEXClpvL34
+*/
 function App() {
 
   // const [checked, setChecked] = React.useState(true); //for checkbox
   const [state, setState] = useState(rowData);
 
+  /* from batch delete attempt  
+  
   const [rows, setRows] = useState(rowData);
   const [deletedRows, setDeletedRows] = useState([]);
 
@@ -93,6 +91,7 @@ function App() {
       rows.filter((r) => deletedRows.filter((sr) => sr.id === r.id).length < 1)
     );
   };
+  */
 
   const handleCommit = (e: GridCellEditCommitParams) => {
     const array = state.map(r => {
@@ -105,21 +104,41 @@ function App() {
     setState(array); //sets state to changed / unchanged values
   }
 
-  // console.log(donations);
+  const [arrIds, setArrIds] = useState([]);// state for selected rows
+  const handleDeleteAll = () => { 
+    //will need to dispatch to a Saga to set a reducer,
+    //send delete query etc 
+    console.log(arrIds);//shows ids of checkbox selected items
+  }
+  /* Delete Multiple Rows Using Checkbox in React w/ Redux:
+  https://www.youtube.com/watch?v=9MFz-ApAPp4
+  hooking up to redux ~ 4:00
+  */
 
   return (
     <div className="App">
       <h1>Data Grid SPIKE!</h1>
       <div>{JSON.stringify(state)}</div>
+
+      <button onClick={handleDeleteAll}
+        style={{ backgroundColor: 'red', color: 'white' }}>
+        Delete selected rows
+      </button>
+
       <div style={{ height: 300, width: '100%' }}>
         <DataGrid onCellEditCommit={handleCommit}
           checkboxSelection
-          onRowSelected={handleRowSelection}
-          rows={rowData} columns={columns} />
+          rows={rowData} columns={columns}
+          getRowId={(rowData) => rowData.id}
+          onSelectionModelChange={(ids) => {
+            setArrIds(ids);
+          }}
+        />
       </div>
-      <Button variant="contained" color="primary" onClick={handlePurge}>
+      {/* <Button variant="contained" color="primary" onClick={handlePurge}>
         Purge
-      </Button>
+      </Button> 
+      from batch delete attempt*/}
     </div>
   );
 }
