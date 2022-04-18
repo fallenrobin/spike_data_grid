@@ -1,6 +1,6 @@
 import './App.css';
 import React, { useState } from 'react';
-import { DataGrid, GridRowsProp, GridColDef } from '@mui/x-data-grid';
+import { DataGrid } from '@mui/x-data-grid';
 // import { Checkbox, Button } from '@mui/material';
 
 
@@ -16,7 +16,7 @@ https://www.youtube.com/watch?v=S7-99HqpWvo
 
 
 
-const rowData: GridRowsProp = [
+const rowData = [
   {
     id: 1, date: '1/25/2022',
     orgName: 'World Street Kitchen',
@@ -25,19 +25,19 @@ const rowData: GridRowsProp = [
   },
   {
     id: 2, date: '1/25/2022',
-    orgName: 'Habitat',
+    orgName: 'Habitat for Humanity',
     amount: '$25',
     sent: false
   },
   {
     id: 3, date: '1/25/2022',
-    orgName: 'BLM',
+    orgName: 'Black Girls Code',
     amount: '$25',
     sent: false
   },
 ];
 
-const columns: GridColDef[] = [
+const columns = [
   {
     field: 'date',
     type: 'date',
@@ -48,7 +48,7 @@ const columns: GridColDef[] = [
   {
     field: 'orgName',
     headerName: 'Organization',
-    width: 150,
+    width: 300,
     editable: true
   },
   {
@@ -105,7 +105,7 @@ function App() {
   };
   */
 
-  const handleCommit = (e: GridCellEditCommitParams) => {
+  const handleCommit = (e) => {
     const array = state.map(r => {
       if (r.id === e.id) { //compares the record id to the edit id
         return { ...r, [e.field]: e.value } //if matching, replaces the old value
