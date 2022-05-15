@@ -3,11 +3,36 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { createStore, combineReducers } from 'redux';
+import { Provider } from 'react-redux';
+import axios from 'axios';
+
+
+const URLreducer = (state = '', action) => {
+  if (action.type === 'SET_URL') {
+    console.log('reducer payload:', action.payload);
+    return action.payload;
+    // axios.post('/link', action.payload)
+    //       .then(response => {
+    //         console.log('response after POST:', response.data);
+    //       }).catch(err => {
+    //         console.log(err);
+    //       })
+  }
+  return state;
+}
+
+const storeInstance = createStore(
+  URLreducer
+);
+
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+    <Provider store={storeInstance}>
+      <App />
+    </Provider>
   </React.StrictMode>
 );
 

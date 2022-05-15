@@ -1,23 +1,30 @@
 import React, { useState } from 'react'
+import axios from 'axios';
+import { useDispatch } from 'react-redux';
+
+
+
 
 
 function LinkShortener() {
 
     const [longURL, setLongURL] = useState('');
+    const dispatch = useDispatch();
 
 
-  const shortenURL = () => {
-    // console.log('click');
-    event.preventDefault();
-    axios.post('/')
+    const shortenURL = (event) => {
+        event.preventDefault();
+        console.log('url/input text on client side is:', longURL);
+        axios.post(`/link`, longURL)
       .then(response => {
         console.log(response.data);
-        setNewGif(response.data);
-      }).catch(err => {
-        console.log(err);
+        // dispatch({ type: 'SET_URL', payload: response.data })
       })
-  }
-   
+      .catch( error => {
+        console.log(error);
+      });
+    }
+
 
     return (
         <>
