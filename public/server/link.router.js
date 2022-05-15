@@ -13,7 +13,6 @@ router.post('/', (req, res) => {
     //     .then((response) => { //response in the server
     //         console.log(response.data);
     //         // res.send(response.data);//to send to client side
-    //         // res.send('Hello World'); // Replace this
     //     }).catch((err) => {
     //         console.log(err);
     //     })

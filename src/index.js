@@ -3,9 +3,11 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { createStore, combineReducers } from 'redux';
+import { createStore, combineReducers, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
-import axios from 'axios';
+// import axios from 'axios';
+import logger from 'redux-logger';
+
 
 
 const URLreducer = (state = '', action) => {
@@ -23,7 +25,10 @@ const URLreducer = (state = '', action) => {
 }
 
 const storeInstance = createStore(
-  URLreducer
+  combineReducers({
+    URLreducer,
+}),
+applyMiddleware(logger),
 );
 
 

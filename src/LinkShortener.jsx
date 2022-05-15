@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import axios from 'axios';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 
 
@@ -10,6 +10,7 @@ function LinkShortener() {
 
     const [longURL, setLongURL] = useState('');
     const dispatch = useDispatch();
+    const URL = useSelector((store) => store.URLreducer);
 
 
     const shortenURL = (event) => {
@@ -32,6 +33,7 @@ function LinkShortener() {
             <form onSubmit={shortenURL}>
                 <input value={longURL} type="text" onChange={(event) => setLongURL(event.target.value)} />
             </form>
+            <h1>The shortened link is: </h1>
         </>
     )
 }
