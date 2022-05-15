@@ -14,20 +14,21 @@ function LinkShortener() {
     const dispatch = useDispatch();
     const URL = useSelector((store) => store.URLreducer);
 
-    /******* useCopy
-    
-    const [text, setText] = useState(randomStrings[0]);
-  const [copied, copy, setCopied] = useCopy(text);
- 
-  const copyText = () => {
-    copy();
+    /******* useCopy  ********/
 
-    setTimeout(() => {
-      setCopied(false);
-    }, 3000);
-  };
-     
-    ********/
+    const [text, setText] = useState('(this is where the tinyURL will go)');
+    const [copied, copy, setCopied] = useCopy(text);
+
+    const copyText = () => {
+        copy();
+
+        setTimeout(() => {
+            setCopied(false);
+        }, 8000);
+    };
+
+    /******* useCopy  ********/
+
 
     const shortenURL = (event) => {
         event.preventDefault();
@@ -36,6 +37,7 @@ function LinkShortener() {
             .then(response => {
                 console.log(response.data);
                 // dispatch({ type: 'SET_URL', payload: response.data })
+                setLongURL('');
             })
             .catch(error => {
                 console.log(error);
@@ -47,20 +49,26 @@ function LinkShortener() {
         <>
             <div>Link Shortener</div>
             <form onSubmit={shortenURL}>
-                <input value={longURL} type="text" onChange={(event) => setLongURL(event.target.value)} />
+                <input 
+                value={longURL} 
+                style={{width:'300px'}}
+                placeholder='paste long URL here and hit enter'
+                type="text" 
+                onChange={(event) => setLongURL(event.target.value)} />
             </form>
-            <h3>The shortened link is: </h3>
 
-            {/* <div>
-                <p>The text we're gonna copy is:</p>
-                <h2>{text}</h2>
+            {/* ******* useCopy  ******** */}
+            <div>
+                <p>This will copy to the clipboard:</p>
+                <h3>{text}</h3>
                 {copied ? (
-                    <p>Text copied to clipboard</p>
+                    <p>Link copied! You can now paste it in an email or text</p>
                 ) : (
                     <button onClick={copyText}>Copy text</button>
                 )}
                 <br />
-            </div> */}
+            </div>
+            {/* ******* useCopy  ******** */}
 
 
         </>
