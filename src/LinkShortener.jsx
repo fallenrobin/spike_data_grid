@@ -57,7 +57,7 @@ function LinkShortener() {
                 onChange={(event) => setLongURL(event.target.value)} />
             </form>
 
-            {/* ******* useCopy  ******** */}
+            {/* ******* useCopy https://www.npmjs.com/package/use-copy ******** */}
             <div>
                 <p>This will copy to the clipboard:</p>
                 <h3>{text}</h3>
